@@ -11,7 +11,12 @@ public class GatewayConfig {
 	@Bean
 	public RouteLocator gatewayRouter(RouteLocatorBuilder builder) {
 		return builder.routes()
-				.route(p -> p.path("/get").uri("http://httpbin.org:80"))
+				.route(p -> p
+						.path("/get")
+						.filters(f -> f
+								.addRequestHeader("myheader", "myheader")
+								.addRequestParameter("myparam", "myparam"))
+						.uri("http://httpbin.org:80"))
 				.build();
 	}
 
